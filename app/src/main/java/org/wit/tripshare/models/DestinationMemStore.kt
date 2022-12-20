@@ -1,6 +1,5 @@
 package org.wit.tripshare.models
 
-import org.wit.tripstore.models.DestinationStore
 import timber.log.Timber.i
 
 var lastId = 0L
@@ -47,5 +46,9 @@ class DestinationMemStore : DestinationStore {
 
     private fun logAll() {
         destinations.forEach { i("$it") }
+    }
+    override fun findById(id:Long) : DestinationModel? {
+        val foundDestination: DestinationModel? = destinations.find { it.id == id }
+        return foundDestination
     }
 }

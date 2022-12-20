@@ -5,7 +5,6 @@ import android.net.Uri
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import org.wit.tripshare.helpers.*
-import org.wit.tripstore.models.DestinationStore
 import timber.log.Timber
 import java.lang.reflect.Type
 import java.util.*
@@ -59,10 +58,13 @@ class DestinationJSONStore(private val context: Context) : DestinationStore {
         }
         serializeDestination()
     }
-
     override fun delete(destination: DestinationModel) {
         destinations.remove(destination)
         serializeDestination()
+    }
+    override fun findById(id: Long): DestinationModel? {
+        val foundDestination: DestinationModel? = destinations.find { it.id == id }
+        return foundDestination
     }
 
     private fun serializeDestination() {

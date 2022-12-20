@@ -3,7 +3,6 @@ package org.wit.tripshare.main
 import android.app.Application
 import org.wit.tripshare.models.RoadtripJSONStore
 import org.wit.tripshare.models.*
-import org.wit.tripstore.models.DestinationStore
 import timber.log.Timber
 import timber.log.Timber.i
 

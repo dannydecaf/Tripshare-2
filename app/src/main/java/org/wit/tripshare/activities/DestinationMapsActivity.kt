@@ -48,8 +48,14 @@ class DestinationMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickList
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        val currentDestinationTitle: TextView = findViewById(R.id.currentDestinationTitle)
-        currentDestinationTitle.text = marker.title
+        val tag = marker.tag as Long
+        val destination = app.destinations.findById(tag)
+
+        contentBinding.currentDestinationTitle.text = destination!!.title
+        contentBinding.currentDestinationDescription.text = destination!!.description
+        Picasso.get()
+            .load(destination.image)
+            .into(contentBinding.currentDestinationImage)
 
         return false
     }

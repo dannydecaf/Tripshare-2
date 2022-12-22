@@ -12,8 +12,7 @@ data class RoadtripModel(var id: Long = 0,
                          var roadtripLowlights: String = "",
                          var roadtripDates: String = "",
                          var roadtripRating: Float = 0.0f,
-                         var roadtripImage: Uri = Uri.EMPTY) : Parcelable {
-}
+                         var roadtripImage: Uri = Uri.EMPTY) : Parcelable
 
 
 

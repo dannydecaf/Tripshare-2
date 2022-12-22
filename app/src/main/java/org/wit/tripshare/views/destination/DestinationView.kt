@@ -5,14 +5,22 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import org.wit.tripshare.R
 import org.wit.tripshare.databinding.ActivityDestinationBinding
 import org.wit.tripshare.models.DestinationModel
 import timber.log.Timber.i
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DestinationView : AppCompatActivity() {
+
+    private lateinit var arrivedDatePicker : TextView
+    private lateinit var btnDateArrived : MaterialButton
 
     private lateinit var binding: ActivityDestinationBinding
     private lateinit var presenter: DestinationPresenter
@@ -26,7 +34,29 @@ class DestinationView : AppCompatActivity() {
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
 
+        arrivedDatePicker = findViewById(R.id.dateArrived)
+        btnDateArrived = findViewById(R.id.btnDateArrived)
+
         presenter = DestinationPresenter(this)
+
+        btnDateArrived.setOnClickListener {
+            val datePickerRange = MaterialDatePicker.Builder.dateRangePicker()
+                .setTitleText("Select Date")
+                .setSelection(
+                    androidx.core.util.Pair(
+                        MaterialDatePicker.thisMonthInUtcMilliseconds(),
+                        MaterialDatePicker.todayInUtcMilliseconds()
+                    )
+                )
+                .build()
+            datePickerRange.show(supportFragmentManager, "date_picker")
+
+            datePickerRange.addOnPositiveButtonClickListener {
+                val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.UK)
+                arrivedDatePicker.text = "${simpleDateFormat.format(it.first)} to ${simpleDateFormat.format(it.second)}"
+            }
+        }
+
 
         binding.chooseDestinationImage.setOnClickListener {
             presenter.cacheDestination(binding.destinationTitle.text.toString(), binding.destinationDescription.text.toString(),

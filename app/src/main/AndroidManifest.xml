@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-           android:name=".activities.RoadtripListActivity"
+           android:name=".views.roadtriplist.RoadtripListView"
            android:exported="true">
            <intent-filter>
                <action android:name="android.intent.action.MAIN" />
@@ -40,7 +40,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.RoadtripActivity" />
+        <activity android:name=".views.roadtrip.RoadtripView" />
                 <activity
                     android:name=".views.destinationlist.DestinationListView"
                     android:exported="true">

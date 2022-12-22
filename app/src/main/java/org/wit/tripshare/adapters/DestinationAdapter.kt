@@ -17,11 +17,11 @@ class DestinationAdapter constructor(
     private var destinations: List<DestinationModel>,
     private val listener: DestinationListener
 ) :
-        RecyclerView.Adapter<DestinationAdapter.MainHolder>() {
+    RecyclerView.Adapter<DestinationAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         val binding = CardDestinationBinding
-                .inflate(LayoutInflater.from(parent.context), parent, false)
+            .inflate(LayoutInflater.from(parent.context), parent, false)
 
         return MainHolder(binding)
     }
@@ -34,7 +34,7 @@ class DestinationAdapter constructor(
     override fun getItemCount(): Int = destinations.size
 
     class MainHolder(private val binding: CardDestinationBinding) :
-            RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(destination: DestinationModel, listener: DestinationListener) {
             binding.destinationTitle.text = destination.title

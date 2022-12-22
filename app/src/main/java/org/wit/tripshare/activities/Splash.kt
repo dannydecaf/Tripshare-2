@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import org.wit.tripshare.R
-import org.wit.tripshare.views.roadtriplist.RoadtripListView
 
 class Splash : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +16,7 @@ class Splash : AppCompatActivity() {
 
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
-            val intent = Intent(this, RoadtripListView::class.java)
+            val intent = Intent(this, RoadtripListActivity::class.java)
             startActivity(intent)
             finish()
         }, 3000)

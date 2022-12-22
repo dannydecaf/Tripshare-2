@@ -18,10 +18,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-                <activity
-                    android:name=".views.location.EditLocationView"
-                    android:exported="true"
-                    android:label="@string/title_activity_map" />
+        <activity
+            android:name=".activities.MapActivity"
+            android:exported="true"
+            android:label="@string/title_activity_map" />
         <activity
             android:name=".activities.Splash"
             android:exported="true"
@@ -32,26 +32,26 @@
             </intent-filter>
         </activity>
         <activity
-           android:name=".views.roadtriplist.RoadtripListView"
-           android:exported="true">
-           <intent-filter>
-               <action android:name="android.intent.action.MAIN" />
+            android:name=".activities.RoadtripListActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.roadtrip.RoadtripView" />
-                <activity
-                    android:name=".views.destinationlist.DestinationListView"
-                    android:exported="true">
-                    <intent-filter>
-                        <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".activities.RoadtripActivity" />
+        <activity
+            android:name=".activities.DestinationListActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-                        <category android:name="android.intent.category.LAUNCHER" />
-                    </intent-filter>
-                </activity>
-                <activity android:name=".views.destination.DestinationView" />
-                <activity android:name=".activities.DestinationMapsActivity" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.DestinationActivity" />
+        <activity android:name=".activities.DestinationMapsActivity" />
     </application>
 
 </manifest>

@@ -19,5 +19,5 @@ data class DestinationModel(var id: Long = 0,
 
 @Parcelize
 data class DestinationLocation(var lat: Double = 0.0,
-                    var lng: Double = 0.0,
-                    var zoom: Float = 0f) : Parcelable
+                               var lng: Double = 0.0,
+                               var zoom: Float = 0f) : Parcelable

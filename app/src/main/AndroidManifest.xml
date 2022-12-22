@@ -19,7 +19,7 @@
             android:value="@string/google_maps_key" />
 
                 <activity
-                    android:name=".activities.MapActivity"
+                    android:name=".views.location.EditLocationView"
                     android:exported="true"
                     android:label="@string/title_activity_map" />
         <activity
@@ -42,7 +42,7 @@
         </activity>
         <activity android:name=".activities.RoadtripActivity" />
                 <activity
-                    android:name=".activities.DestinationListActivity"
+                    android:name=".views.destinationlist.DestinationListView"
                     android:exported="true">
                     <intent-filter>
                         <action android:name="android.intent.action.MAIN" />
@@ -50,7 +50,7 @@
                         <category android:name="android.intent.category.LAUNCHER" />
                     </intent-filter>
                 </activity>
-                <activity android:name=".activities.DestinationActivity" />
+                <activity android:name=".views.destination.DestinationView" />
                 <activity android:name=".activities.DestinationMapsActivity" />
     </application>
 

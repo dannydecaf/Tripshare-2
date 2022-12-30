@@ -79,4 +79,5 @@ class RoadtripListActivity : AppCompatActivity(), RoadtripListener/*, MultiplePe
         binding.recyclerView.adapter = RoadtripAdapter(roadtrips, this)
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
+    //test
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/roadtripListActivity">
+
+    <fragment
+        android:id="@+id/roadtripListActivity"
+        android:name="org.wit.tripshare.activities.RoadtripListActivity"
+        android:label="RoadtripListActivity"
+        tools:layout="@layout/fragment_roadtrip_list" >
+        <action
+            android:id="@+id/action_roadtripListActivity_to_roadtripActivity"
+            app:destination="@id/roadtripActivity" />
+        <action
+            android:id="@+id/action_roadtripListActivity_to_roadtripActivity2"
+            app:destination="@id/roadtripActivity" />
+        <action
+            android:id="@+id/action_roadtripListActivity_to_destinationListActivity2"
+            app:destination="@id/destinationListActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/roadtripActivity"
+        android:name="org.wit.tripshare.activities.RoadtripActivity"
+        android:label="RoadtripActivity"
+        tools:layout="@layout/fragment_roadtrip">
+        <action
+            android:id="@+id/action_roadtripActivity_to_roadtripListActivity"
+            app:destination="@id/roadtripListActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/destinationListActivity"
+        android:name="org.wit.tripshare.activities.DestinationListActivity"
+        android:label="fragment_destination_list"
+        tools:layout="@layout/fragment_destination_list" >
+        <action
+            android:id="@+id/action_destinationListActivity_to_roadtripListActivity"
+            app:destination="@id/roadtripListActivity" />
+        <action
+            android:id="@+id/action_destinationListActivity_to_destinationActivity"
+            app:destination="@id/destinationActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/destinationActivity"
+        android:name="org.wit.tripshare.activities.DestinationActivity"
+        android:label="activity_destination"
+        tools:layout="@layout/activity_destination" >
+        <action
+            android:id="@+id/action_destinationActivity_to_destinationListActivity"
+            app:destination="@id/destinationListActivity" />
+    </fragment>
+</navigation>

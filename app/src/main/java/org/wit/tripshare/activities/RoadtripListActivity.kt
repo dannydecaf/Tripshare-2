@@ -11,19 +11,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.wit.tripshare.R
 import org.wit.tripshare.adapters.RoadtripAdapter
 import org.wit.tripshare.adapters.RoadtripListener
-import org.wit.tripshare.databinding.ActivityRoadtripListBinding
+import org.wit.tripshare.databinding.FragmentRoadtripListBinding
 import org.wit.tripshare.main.MainApp
 import org.wit.tripshare.models.RoadtripModel
 
 class RoadtripListActivity : AppCompatActivity(), RoadtripListener/*, MultiplePermissionsListener*/ {
 
     lateinit var app: MainApp
-    private lateinit var binding: ActivityRoadtripListBinding
+    private lateinit var binding: FragmentRoadtripListBinding
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRoadtripListBinding.inflate(layoutInflater)
+        binding = FragmentRoadtripListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
@@ -79,5 +79,4 @@ class RoadtripListActivity : AppCompatActivity(), RoadtripListener/*, MultiplePe
         binding.recyclerView.adapter = RoadtripAdapter(roadtrips, this)
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
-    //test
 }

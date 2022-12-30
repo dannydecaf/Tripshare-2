@@ -21,7 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import org.wit.tripshare.R
-import org.wit.tripshare.databinding.ActivityRoadtripBinding
+import org.wit.tripshare.databinding.FragmentRoadtripBinding
 import org.wit.tripshare.helpers.showImagePicker
 import org.wit.tripshare.main.MainApp
 import org.wit.tripshare.models.RoadtripModel
@@ -35,7 +35,7 @@ class RoadtripActivity : AppCompatActivity() {
     private lateinit var startDatePicker : TextView
     private lateinit var btnStartDate : MaterialButton
 
-    private lateinit var binding: ActivityRoadtripBinding
+    private lateinit var binding: FragmentRoadtripBinding
     var roadtrip = RoadtripModel()
     lateinit var app: MainApp
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
@@ -44,7 +44,7 @@ class RoadtripActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityRoadtripBinding.inflate(layoutInflater)
+        binding = FragmentRoadtripBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)

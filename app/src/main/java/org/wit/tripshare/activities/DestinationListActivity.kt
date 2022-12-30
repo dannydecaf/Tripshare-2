@@ -11,20 +11,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.wit.tripshare.R
 import org.wit.tripshare.adapters.DestinationAdapter
 import org.wit.tripshare.adapters.DestinationListener
-import org.wit.tripshare.databinding.ActivityDestinationListBinding
+import org.wit.tripshare.databinding.FragmentDestinationListBinding
 import org.wit.tripshare.main.MainApp
 import org.wit.tripshare.models.DestinationModel
 
 class DestinationListActivity : AppCompatActivity(), DestinationListener/*, MultiplePermissionsListener*/ {
 
     lateinit var app: MainApp
-    private lateinit var binding: ActivityDestinationListBinding
+    private lateinit var binding: FragmentDestinationListBinding
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDestinationListBinding.inflate(layoutInflater)
+        binding = FragmentDestinationListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)

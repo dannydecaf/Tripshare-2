@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.wit.tripshare.views.roadtrip.RoadtripView">
+    tools:context="org.wit.tripshare.activities.RoadtripActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -118,18 +118,18 @@
                     android:text="Click to add dates on the road"/>
 
 
-<!--                <androidx.appcompat.widget.AppCompatEditText-->
-<!--                    android:id="@+id/roadtripEndDate"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_margin="8dp"-->
-<!--                    android:hint="@string/hint_roadtripEndDate"-->
-<!--                    android:inputType="text"-->
-<!--                    android:maxLength="25"-->
-<!--                    android:maxLines="1"-->
-<!--                    android:padding="8dp"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="14sp" />-->
+                <!--                <androidx.appcompat.widget.AppCompatEditText-->
+                <!--                    android:id="@+id/roadtripEndDate"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_margin="8dp"-->
+                <!--                    android:hint="@string/hint_roadtripEndDate"-->
+                <!--                    android:inputType="text"-->
+                <!--                    android:maxLength="25"-->
+                <!--                    android:maxLines="1"-->
+                <!--                    android:padding="8dp"-->
+                <!--                    android:textColor="@color/black"-->
+                <!--                    android:textSize="14sp" />-->
 
                 <androidx.appcompat.widget.AppCompatRatingBar
                     android:id="@+id/roadtripRatingBarInput"

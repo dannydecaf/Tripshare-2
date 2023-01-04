@@ -1,4 +1,4 @@
-package org.wit.tripshare.activities
+package org.wit.tripshare.ui.map
 
 import android.app.Activity
 import android.content.Intent

@@ -72,7 +72,7 @@ class RoadtripListActivity : AppCompatActivity(), RoadtripListener/*, MultiplePe
     }
 
     private fun loadRoadtrips() {
-        showRoadtrips(app.roadtrips.findAll())
+        showRoadtrips(app.roadtripsStore.findAll())
     }
 
     fun showRoadtrips (roadtrips: List<RoadtripModel>) {

@@ -1,4 +1,4 @@
-package org.wit.tripshare.activities
+package org.wit.tripshare.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/item_add"
-        android:icon="@android:drawable/ic_menu_add"
+        android:id="@+id/roadtripActivity"
+        android:orderInCategory="100"
         android:title="@string/menu_addRoadtrip"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
 </menu>

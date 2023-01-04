@@ -8,15 +8,15 @@ import timber.log.Timber.i
 
 class MainApp : Application() {
 
-    lateinit var roadtrips: RoadtripStore
-    lateinit var destinations: DestinationStore
+    lateinit var roadtripsStore: RoadtripStore
+    lateinit var destinationsStore: DestinationStore
 
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
-        roadtrips = RoadtripJSONStore(applicationContext)
+        roadtripsStore = RoadtripJSONStore(applicationContext)
         i("Roadtrip started")
-        destinations = DestinationJSONStore(applicationContext)
+        destinationsStore = DestinationJSONStore(applicationContext)
         i("Destination started")
     }
 }

@@ -4,10 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Pair
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,6 +19,7 @@ import org.wit.tripshare.helpers.showImagePicker
 import org.wit.tripshare.main.MainApp
 import org.wit.tripshare.models.DestinationLocation
 import org.wit.tripshare.models.DestinationModel
+import org.wit.tripshare.ui.map.MapActivity
 import timber.log.Timber.i
 import java.text.SimpleDateFormat
 import java.util.*
@@ -102,9 +101,9 @@ class DestinationActivity : AppCompatActivity() {
                     .show()
             } else {
                 if (edit) {
-                    app.destinations.update(destination.copy())
+                    app.destinationsStore.update(destination.copy())
                 } else {
-                    app.destinations.create(destination.copy())
+                    app.destinationsStore.create(destination.copy())
                 }
             }
             i("add Button Pressed: $destination")
@@ -141,7 +140,7 @@ class DestinationActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_delete -> {
-                app.destinations.delete(destination)
+                app.destinationsStore.delete(destination)
                 finish()
             }
             R.id.item_cancel -> {

@@ -15,10 +15,14 @@
             app:destination="@id/roadtripActivity" />
         <action
             android:id="@+id/action_roadtripListActivity_to_roadtripActivity2"
-            app:destination="@id/roadtripActivity" />
+            app:destination="@id/roadtripActivity"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_roadtripListActivity_to_destinationListActivity2"
-            app:destination="@id/destinationListActivity" />
+            app:destination="@id/destinationListActivity"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/roadtripActivity"
@@ -27,7 +31,9 @@
         tools:layout="@layout/fragment_roadtrip">
         <action
             android:id="@+id/action_roadtripActivity_to_roadtripListActivity"
-            app:destination="@id/roadtripListActivity" />
+            app:destination="@id/roadtripListActivity"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/destinationListActivity"
@@ -39,15 +45,19 @@
             app:destination="@id/roadtripListActivity" />
         <action
             android:id="@+id/action_destinationListActivity_to_destinationActivity"
-            app:destination="@id/destinationActivity" />
+            app:destination="@id/destinationActivity"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/destinationActivity"
         android:name="org.wit.tripshare.activities.DestinationActivity"
         android:label="activity_destination"
-        tools:layout="@layout/activity_destination" >
+        tools:layout="@layout/fragment_destination" >
         <action
             android:id="@+id/action_destinationActivity_to_destinationListActivity"
-            app:destination="@id/destinationListActivity" />
+            app:destination="@id/destinationListActivity"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
 </navigation>

@@ -1,21 +1,23 @@
-package org.wit.tripshare.activities
+package org.wit.tripshare.ui.destinationlist
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.wit.tripshare.R
+import org.wit.tripshare.activities.DestinationActivity
+import org.wit.tripshare.activities.DestinationMapsActivity
 import org.wit.tripshare.adapters.DestinationAdapter
 import org.wit.tripshare.adapters.DestinationListener
 import org.wit.tripshare.databinding.FragmentDestinationListBinding
 import org.wit.tripshare.main.MainApp
 import org.wit.tripshare.models.DestinationModel
 
-class DestinationListActivity : AppCompatActivity(), DestinationListener/*, MultiplePermissionsListener*/ {
+class DestinationListFragment : Fragment(), DestinationListener/*, MultiplePermissionsListener*/ {
 
     lateinit var app: MainApp
     private lateinit var binding: FragmentDestinationListBinding
@@ -77,7 +79,7 @@ class DestinationListActivity : AppCompatActivity(), DestinationListener/*, Mult
     }
 
     private fun loadDestinations() {
-        showDestinations(app.destinationsStore.findAll())
+        showDestinations(app.destinations.findAll())
     }
 
     fun showDestinations (destinations: List<DestinationModel>) {

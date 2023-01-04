@@ -3,61 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/roadtripListActivity">
+    app:startDestination="@id/roadtripListFragment">
 
     <fragment
-        android:id="@+id/roadtripListActivity"
-        android:name="org.wit.tripshare.activities.RoadtripListActivity"
-        android:label="RoadtripListActivity"
+        android:id="@+id/roadtripFragment"
+        android:name="org.wit.tripshare.ui.roadtrip.RoadtripFragment"
+        android:label="@string/action_roadtrip"
+        tools:layout="@layout/fragment_roadtrip" >
+        <action
+            android:id="@+id/action_roadtripFragment_to_roadtripListFragment"
+            app:destination="@id/roadtripListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/roadtripListFragment"
+        android:name="org.wit.tripshare.ui.roadtriplist.RoadtripListFragment"
+        android:label="@string/action_roadtrip_list"
         tools:layout="@layout/fragment_roadtrip_list" >
         <action
-            android:id="@+id/action_roadtripListActivity_to_roadtripActivity"
-            app:destination="@id/roadtripActivity" />
-        <action
-            android:id="@+id/action_roadtripListActivity_to_roadtripActivity2"
-            app:destination="@id/roadtripActivity"
+            android:id="@+id/action_roadtripListFragment_to_roadtripFragment"
+            app:destination="@id/roadtripFragment"
+            app:popUpTo="@id/main_navigation"
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
         <action
-            android:id="@+id/action_roadtripListActivity_to_destinationListActivity2"
-            app:destination="@id/destinationListActivity"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            android:id="@+id/action_roadtripListFragment_to_roadtripDetailFragment"
+            app:destination="@id/roadtripDetailFragment" />
     </fragment>
     <fragment
-        android:id="@+id/roadtripActivity"
-        android:name="org.wit.tripshare.activities.RoadtripActivity"
-        android:label="RoadtripActivity"
-        tools:layout="@layout/fragment_roadtrip">
-        <action
-            android:id="@+id/action_roadtripActivity_to_roadtripListActivity"
-            app:destination="@id/roadtripListActivity"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
-    </fragment>
+        android:id="@+id/aboutFragment"
+        android:name="org.wit.tripshare.ui.about.AboutFragment"
+        android:label="@string/action_about"
+        tools:layout="@layout/fragment_about" />
     <fragment
-        android:id="@+id/destinationListActivity"
-        android:name="org.wit.tripshare.activities.DestinationListActivity"
-        android:label="fragment_destination_list"
-        tools:layout="@layout/fragment_destination_list" >
+        android:id="@+id/roadtripDetailFragment"
+        android:name="org.wit.tripshare.ui.detail.RoadtripDetailFragment"
+        android:label="Roadtrip Detail"
+        tools:layout="@layout/fragment_roadtrip_detail" >
         <action
-            android:id="@+id/action_destinationListActivity_to_roadtripListActivity"
-            app:destination="@id/roadtripListActivity" />
-        <action
-            android:id="@+id/action_destinationListActivity_to_destinationActivity"
-            app:destination="@id/destinationActivity"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
-    </fragment>
-    <fragment
-        android:id="@+id/destinationActivity"
-        android:name="org.wit.tripshare.activities.DestinationActivity"
-        android:label="activity_destination"
-        tools:layout="@layout/fragment_destination" >
-        <action
-            android:id="@+id/action_destinationActivity_to_destinationListActivity"
-            app:destination="@id/destinationListActivity"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            android:id="@+id/action_roadtripDetailFragment_to_roadtripListFragment"
+            app:destination="@id/roadtripListFragment" />
+        <argument
+            android:name="roadtripid"
+            app:argType="long" />
     </fragment>
 </navigation>

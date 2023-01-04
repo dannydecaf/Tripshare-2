@@ -1,168 +1,127 @@
 package org.wit.tripshare.ui.roadtrip
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
+import android.widget.Toast
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import android.widget.TextView
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.util.Pair
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.snackbar.Snackbar
-import com.squareup.picasso.Picasso
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import org.wit.tripshare.R
 import org.wit.tripshare.databinding.FragmentRoadtripBinding
-import org.wit.tripshare.helpers.showImagePicker
-import org.wit.tripshare.main.MainApp
 import org.wit.tripshare.models.RoadtripModel
-import timber.log.Timber.i
-import java.text.SimpleDateFormat
-import java.util.*
+import org.wit.tripshare.ui.roadtriplist.RoadtripListViewModel
 
 class RoadtripFragment : Fragment() {
 
-    private lateinit var startDatePicker : TextView
-    private lateinit var btnStartDate : MaterialButton
-
-    private lateinit var binding: FragmentRoadtripBinding
-    var roadtrip = RoadtripModel()
-    lateinit var app: MainApp
-    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
-    var edit = false
+    //lateinit var app: DonationXApp
+    var totalDonated = 0
+    private var _fragBinding: FragmentRoadtripBinding? = null
+    // This property is only valid between onCreateView and onDestroyView.
+    private val fragBinding get() = _fragBinding!!
+    //lateinit var navController: NavController
+    private lateinit var roadtripViewModel: RoadtripViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //app = activity?.application as DonationXApp
+        //navController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
+    }
 
-        binding = FragmentRoadtripBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.toolbarAdd.title = title
-        setSupportActionBar(binding.toolbarAdd)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        _fragBinding = FragmentRoadtripBinding.inflate(inflater, container, false)
+        val root = fragBinding.root
+        activity?.title = getString(R.string.action_roadtrip)
+        setupMenu()
+        roadtripViewModel = ViewModelProvider(this).get(RoadtripViewModel::class.java)
+        roadtripViewModel.observableStatus.observe(viewLifecycleOwner, Observer {
+                status -> status?.let { render(status) }
+        })
 
-        startDatePicker = findViewById(R.id.roadtripDates)
-        btnStartDate = findViewById(R.id.btnStartDate)
+        fragBinding.progressBar.max = 10000
+        fragBinding.amountPicker.minValue = 1
+        fragBinding.amountPicker.maxValue = 1000
 
-        btnStartDate.setOnClickListener {
-            val datePickerRange = MaterialDatePicker.Builder.dateRangePicker()
-                .setTitleText("Select Date")
-                .setSelection(
-                    Pair(
-                        MaterialDatePicker.thisMonthInUtcMilliseconds(),
-                        MaterialDatePicker.todayInUtcMilliseconds()
-                    )
-                )
-                .build()
-            datePickerRange.show(supportFragmentManager, "date_picker")
-
-            datePickerRange.addOnPositiveButtonClickListener {
-                val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.UK)
-                startDatePicker.text = "${simpleDateFormat.format(it.first)} to ${simpleDateFormat.format(it.second)}"
-            }
+        fragBinding.amountPicker.setOnValueChangedListener { _, _, newVal ->
+            //Display the newly selected number to paymentAmount
+            fragBinding.paymentAmount.setText("$newVal")
         }
+        setButtonListener(fragBinding)
+        return root;
+    }
 
-        app = application as MainApp
-
-        i("Roadtrip Activity started...")
-
-        if (intent.hasExtra("roadtrip_edit")) {
-            edit = true
-            roadtrip = intent.extras?.getParcelable("roadtrip_edit")!!
-            binding.roadtripTitle.setText(roadtrip.roadtripTitle)
-            binding.roadtripDescription.setText(roadtrip.roadtripDescription)
-            binding.roadtripHighlights.setText(roadtrip.roadtripHighlights)
-            binding.roadtripLowlights.setText(roadtrip.roadtripLowlights)
-            binding.btnStartDate.setText(roadtrip.roadtripDates)
-            binding.roadtripRatingBarInput.setOnRatingBarChangeListener {roadtripRatingBar, roadtripRating, fromUser -> roadtrip.roadtripRating = roadtripRating;}
-            binding.btnRoadtripAdd.setText(R.string.save_roadtrip)
-            Picasso.get()
-                .load(roadtrip.roadtripImage)
-                .into(binding.roadtripImage)
-            if (roadtrip.roadtripImage != Uri.EMPTY) {
-                binding.chooseRoadtripImage.setText(R.string.change_roadtrip_image)
+    private fun setupMenu() {
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+            override fun onPrepareMenu(menu: Menu) {
+                // Handle for example visibility of menu items
             }
-        }
 
-        binding.btnRoadtripAdd.setOnClickListener() {
-            roadtrip.roadtripTitle = binding.roadtripTitle.text.toString()
-            roadtrip.roadtripDescription = binding.roadtripDescription.text.toString()
-            roadtrip.roadtripHighlights = binding.roadtripHighlights.text.toString()
-            roadtrip.roadtripLowlights = binding.roadtripLowlights.text.toString()
-            roadtrip.roadtripDates = binding.roadtripDates.text.toString()
-            roadtrip.roadtripRating = binding.roadtripRatingBarInput.rating
-            if (roadtrip.roadtripTitle.isEmpty()) {
-                Snackbar.make(it,R.string.enter_roadtrip_title, Snackbar.LENGTH_LONG)
-                    .show()
-            } else {
-                if (edit) {
-                    app.roadtrips.update(roadtrip.copy())
-                } else {
-                    app.roadtrips.create(roadtrip.copy())
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_roadtrip, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                // Validate and handle the selected menu item
+                return NavigationUI.onNavDestinationSelected(menuItem,
+                    requireView().findNavController())
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+
+//    companion object {
+//        @JvmStatic
+//        fun newInstance() =
+//                RoadtripFragment().apply {
+//                    arguments = Bundle().apply {}
+//                }
+//    }
+
+    private fun render(status: Boolean) {
+        when (status) {
+            true -> {
+                view?.let {
+                    //Uncomment this if you want to immediately return to Roadtrip List
+                    //findNavController().popBackStack()
                 }
             }
-            i("add Button Pressed: $roadtrip")
-            setResult(RESULT_OK)
-            finish()
+            false -> Toast.makeText(context,getString(R.string.roadtripError),Toast.LENGTH_LONG).show()
         }
-
-        binding.chooseRoadtripImage.setOnClickListener {
-            showImagePicker(imageIntentLauncher)
-        }
-
-        binding.chooseRoadtripImage.setOnClickListener {
-            showImagePicker(imageIntentLauncher)
-        }
-
-
-        registerImagePickerCallback()
     }
 
-    private fun updateLabel(myCalendar: Calendar) {
-        val myFormat = "dd-MM-yyyy"
-        val sdf = SimpleDateFormat(myFormat, Locale.UK)
-        startDatePicker.setText(sdf.format(myCalendar.time))
-
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_roadtrip, menu)
-        if (edit) menu.getItem(0).isVisible = true
-        return super.onCreateOptionsMenu(menu)
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_delete -> {
-                app.roadtrips.delete(roadtrip)
-                finish()
-            }
-            R.id.item_cancel -> {
-                finish()
+    fun setButtonListener(layout: FragmentRoadtripBinding) {
+        layout.roadtripButton.setOnClickListener {
+            val amount = if (layout.paymentAmount.text.isNotEmpty())
+                layout.paymentAmount.text.toString().toInt() else layout.amountPicker.value
+            if(totalDonated >= layout.progressBar.max)
+                Toast.makeText(context,"Donate Amount Exceeded!", Toast.LENGTH_LONG).show()
+            else {
+                val paymentmethod = if(layout.paymentMethod.checkedRadioButtonId == R.id.Direct) "Direct" else "Paypal"
+                totalDonated += amount
+                layout.totalSoFar.text = getString(R.string.totalSoFar,totalDonated)
+                layout.progressBar.progress = totalDonated
+                roadtripViewModel.addRoadtrip(RoadtripModel(paymentmethod = paymentmethod,amount = amount))
             }
         }
-        return super.onOptionsItemSelected(item)
     }
 
-    private fun registerImagePickerCallback() {
-        imageIntentLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { result ->
-                when(result.resultCode){
-                    RESULT_OK -> {
-                        if (result.data != null) {
-                            i("Got Result ${result.data!!.data}")
-                            roadtrip.roadtripImage = result.data!!.data!!
-                            Picasso.get()
-                                .load(roadtrip.roadtripImage)
-                                .into(binding.roadtripImage)
-                            binding.chooseRoadtripImage.setText(R.string.change_roadtrip_image)
-                        } // end of if
-                    }
-                    RESULT_CANCELED -> { } else -> { }
-                }
-            }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _fragBinding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val roadtripListViewModel = ViewModelProvider(this).get(RoadtripListViewModel::class.java)
+        roadtripListViewModel.observableRoadtripsList.observe(viewLifecycleOwner, Observer {
+            totalDonated = roadtripListViewModel.observableRoadtripsList.value!!.sumOf { it.amount }
+        })
+        fragBinding.progressBar.progress = totalDonated
+        fragBinding.totalSoFar.text = getString(R.string.totalSoFar,totalDonated)
     }
 }

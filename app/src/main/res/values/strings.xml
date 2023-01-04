@@ -1,61 +1,38 @@
 <resources>
     <string name="app_name">tripShare</string>
+    <string name="roadtripTitle">Welcome Homer</string>
+    <string name="roadtripSubtitle">Please Give Generously</string>
+    <string name="roadtripButton">Add Roadtrip</string>
+    <string name="paypal">PayPal</string>
+    <string name="direct">Direct</string>
+    <string name="amount">Amount</string>
+    <string name="total">Total so Far</string>
+    <string name="totalSoFar">$%d</string>
+    <string name="roadtripListTitle">Roadtrip List</string>
+    <string name="defaultAmount">00</string>
+    <string name="defaultMethod">N/A</string>
+    <string name="enter_amount">Enter Amount</string>
+    <string name="action_roadtrip">Roadtrip</string>
+    <string name="action_roadtrip_list">Roadtrip List</string>
 
-    <string name="button_addRoadtrip">Add Roadtrip</string>
-    <string name="button_addDestination">Add Destination</string>
+    <string name="action_share">Share</string>
+    <string name="action_send">Send</string>
+    <string name="group_communicate">Communicate</string>
 
-    <string name="hint_destinationTitle">Destination Title</string>
-    <string name="hint_destinationDescription">Description</string>
-    <string name="hint_destinationPros">Pros - what you liked, and recommend about the place</string>
-    <string name="hint_destinationCons">Cons - what you disliked, and don\'t recommend about the place</string>
-    <string name="hint_destinationDates">Date(s) Stayed:</string>
-    <string name="hint_destinationDateLeft">Date that you left</string>
-    <string name="hint_destinationRating">Rating out of 5</string>
-    <string name="menu_addDestination">Add</string>
-    <string name="menu_cancelDestination">Cancel</string>
+    <string name="nav_header_title">tripShare</string>
+    <string name="nav_header_subtitle">voteforhomer@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
 
-    <string name="enter_destination_title"> Please enter a Destination Title</string>
-    <string name="save_destination">Save Destination</string>
-    <string name="button_submitRating">Submit Destionation Rating</string>
-    <string name="button_addImage">Add Image</string>
-    <string name="select_destination_image">Select destination image</string>
-    <string name="change_destination_image">Change destination image</string>
-    <string name="button_location">Set Location</string>
-    <string name="title_activity_map">Map</string>
+    <string name="action_about">About Us</string>
+    <string name="aboutus_title">Homer for President !!</string>
+    <string name="aboutus_message">Hi, I\'m Homer\n\nPlease vote for me.\n\n Please Please Please Please!!</string>
 
-    <string name="hint_roadtripTitle">Roadtrip Title</string>
-    <string name="hint_roadtripDescription">Roadtrip Description</string>
-    <string name="hint_roadtripHighlights">Highlights - what you liked, and recommend about the trip</string>
-    <string name="hint_roadtripLowlights">Lowlights - what you disliked, and don\'t recommend about the trip</string>
-    <string name="hint_roadtripDates">Date(s) Stayed:</string>
-    <string name="hint_roadtripRating">Rating out of 5</string>
-    <string name="menu_addRoadtrip">Add</string>
-    <string name="menu_cancelRoadtrip">Cancel</string>
-    <string name="menu_deleteRoadtrip">Delete</string>
+    <string name="roadtripsNotFound">No Roadtrips Yet…\nGo Add a Roadtrip!</string>
+    <string name="roadtripError">Error : Couldn\'t Add a Roadtrip…</string>
+    <string name="roadtripDetails">Roadtrip Details</string>
 
-    <string name="enter_roadtrip_title"> Please enter a Roadtrip Title</string>
-    <string name="save_roadtrip">Save Roadtrip</string>
-    <string name="button_submitRoadtripRating">Submit Roadtrip Rating</string>
-    <string name="button_addRoadtripImage">Add Roadtrip Image</string>
-    <string name="select_roadtrip_image">Select Roadtrip image</string>
-    <string name="change_roadtrip_image">Change Roadtrip image</string>
-    <string name="button_roadtrip_location">Set Roadtrip Location</string>
-    <string name="title_roadtrip_activity_map">Roadtrip Map</string>
-
-    <string name="roadtrip_image_placeholder">Roadtrip Image</string>
-    <string name="roadtrip_title_placeholder">Roadtrip Title</string>
-    <string name="roadtrip_description_placeholder">Roadtrip Description</string>
-
-    <string name="destination_image_placeholder">Destination Image</string>
-    <string name="destination_title_placeholder">Destination Title</string>
-    <string name="destination_description_placeholder">Destination Description</string>
-
-
-    <string name="action_destination">Donate</string>
-    <string name="action_report">Report</string>
-
-
-    <string name="splash_screen_title">tripShare</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="amt">Amount :</string>
+    <string name="payment">Payment :</string>
+    <string name="message">Message :</string>
+    <string name="upvotes">UpVotes :</string>
 </resources>

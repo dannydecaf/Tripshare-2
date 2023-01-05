@@ -1,32 +1,75 @@
 package org.wit.tripshare.ui.detail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import org.wit.tripshare.databinding.FragmentRoadtripDetailBinding
+import org.wit.tripshare.ui.auth.LoggedInViewModel
+import org.wit.tripshare.ui.roadtriplist.RoadtripListViewModel
+import timber.log.Timber
 import org.wit.tripshare.R
 
 class RoadtripDetailFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = RoadtripDetailFragment()
-    }
-
-    private lateinit var viewModel: RoadtripDetailViewModel
+    private lateinit var detailViewModel: RoadtripDetailViewModel
     private val args by navArgs<RoadtripDetailFragmentArgs>()
+    private var _fragBinding: FragmentRoadtripDetailBinding? = null
+    private val fragBinding get() = _fragBinding!!
+    private val loggedInViewModel: LoggedInViewModel by activityViewModels()
+    private val RoadtripListViewModel: RoadtripListViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _fragBinding = FragmentRoadtripDetailBinding.inflate(inflater, container, false)
+        val root = fragBinding.root
 
-        val view = inflater.inflate(R.layout.fragment_roadtrip_detail, container, false)
+        detailViewModel = ViewModelProvider(this).get(RoadtripDetailViewModel::class.java)
+        detailViewModel.observableRoadtrip.observe(viewLifecycleOwner, Observer { render() })
 
-        Toast.makeText(context,"Roadtrip ID Selected : ${args.roadtripid}",Toast.LENGTH_LONG).show()
+        fragBinding.editRoadtripButton.setOnClickListener {
+            detailViewModel.updateRoadtrip(
+                    loggedInViewModel.liveFirebaseUser.value?.uid!!,
+                    args.roadtripid, fragBinding.roadtripvm?.observableRoadtrip!!.value!!
+                )
+                        findNavController().navigateUp()
+        }
 
-        return view
+        fragBinding.deleteRoadtripButton.setOnClickListener {
+            RoadtripListViewModel.delete(
+                loggedInViewModel.liveFirebaseUser.value?.uid!!,
+                detailViewModel.observableRoadtrip.value?.uid!!
+            )
+            findNavController().navigateUp()
+        }
+
+        return root
+    }
+
+    private fun render() {
+        fragBinding.roadtripvm = detailViewModel
+        Timber.i("Retrofit fragBinding.roadtripvm == $fragBinding.roadtripvm")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        detailViewModel.getRoadtrip(
+            loggedInViewModel.liveFirebaseUser.value?.uid!!,
+            args.roadtripid
+        )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _fragBinding = null
     }
 }

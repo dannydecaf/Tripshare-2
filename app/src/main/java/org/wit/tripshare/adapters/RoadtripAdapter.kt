@@ -35,6 +35,7 @@ class RoadtripAdapter constructor(private var roadtrips: List<RoadtripModel>,
 //            binding.paymentamount.text = donation.amount.toString()
 //            binding.paymentmethod.text = donation.paymentmethod
 
+            binding.root.tag = roadtrip
             binding.roadtrip = roadtrip
             binding.imageIcon.setImageResource(R.mipmap.ic_launcher_round)
             binding.root.setOnClickListener { listener.onRoadtripClick(roadtrip) }

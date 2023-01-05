@@ -10,11 +10,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import org.wit.tripshare.R
 import org.wit.tripshare.databinding.FragmentRoadtripBinding
 import org.wit.tripshare.models.RoadtripModel
-import org.wit.tripshare.ui.roadtriplist.RoadtripListViewModel
 
 class RoadtripFragment : Fragment() {
 
@@ -42,16 +42,8 @@ class RoadtripFragment : Fragment() {
         roadtripViewModel.observableStatus.observe(viewLifecycleOwner, Observer {
                 status -> status?.let { render(status) }
         })
-
-        fragBinding.progressBar.max = 10000
-        fragBinding.amountPicker.minValue = 1
-        fragBinding.amountPicker.maxValue = 1000
-
-        fragBinding.amountPicker.setOnValueChangedListener { _, _, newVal ->
-            //Display the newly selected number to paymentAmount
-            fragBinding.paymentAmount.setText("$newVal")
-        }
         setButtonListener(fragBinding)
+
         return root;
     }
 
@@ -62,7 +54,7 @@ class RoadtripFragment : Fragment() {
             }
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_roadtrip, menu)
+                menuInflater.inflate(R.menu.menu_add_roadtrip, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -86,8 +78,7 @@ class RoadtripFragment : Fragment() {
         when (status) {
             true -> {
                 view?.let {
-                    //Uncomment this if you want to immediately return to Roadtrip List
-                    //findNavController().popBackStack()
+                    findNavController().popBackStack()
                 }
             }
             false -> Toast.makeText(context,getString(R.string.roadtripError),Toast.LENGTH_LONG).show()
@@ -96,16 +87,20 @@ class RoadtripFragment : Fragment() {
 
     fun setButtonListener(layout: FragmentRoadtripBinding) {
         layout.roadtripButton.setOnClickListener {
-            val amount = if (layout.paymentAmount.text.isNotEmpty())
-                layout.paymentAmount.text.toString().toInt() else layout.amountPicker.value
-            if(totalDonated >= layout.progressBar.max)
-                Toast.makeText(context,"Donate Amount Exceeded!", Toast.LENGTH_LONG).show()
+            if (layout.roadtripTitle.text!!.isEmpty() or layout.roadtripDescription.text!!.isEmpty())
+                Toast.makeText(context, "Enter Details!", Toast.LENGTH_LONG).show()
             else {
-                val paymentmethod = if(layout.paymentMethod.checkedRadioButtonId == R.id.Direct) "Direct" else "Paypal"
-                totalDonated += amount
-                layout.totalSoFar.text = getString(R.string.totalSoFar,totalDonated)
-                layout.progressBar.progress = totalDonated
-                roadtripViewModel.addRoadtrip(RoadtripModel(paymentmethod = paymentmethod,amount = amount))
+                roadtripViewModel.addRoadtrip(
+                    loggedInViewModel.liveFirebaseUser,
+                    RoadtripModel(
+                        roadtripTitle = layout.roadtripTitle.text.toString(),
+                        roadtripDescription = layout.roadtripDescription.text.toString(),
+                        roadtripHighlights = layout.roadtripHighlights.text.toString(),
+                        roadtripLowlights = layout.roadtripLowlights.text.toString(),
+                        roadtripRating = layout.roadtripRatingBarInput.rating,
+                        uid = loggedInViewModel.liveFirebaseUser.value?.uid!!
+                    )
+                )
             }
         }
     }
@@ -113,15 +108,5 @@ class RoadtripFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _fragBinding = null
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val roadtripListViewModel = ViewModelProvider(this).get(RoadtripListViewModel::class.java)
-        roadtripListViewModel.observableRoadtripsList.observe(viewLifecycleOwner, Observer {
-            totalDonated = roadtripListViewModel.observableRoadtripsList.value!!.sumOf { it.amount }
-        })
-        fragBinding.progressBar.progress = totalDonated
-        fragBinding.totalSoFar.text = getString(R.string.totalSoFar,totalDonated)
     }
 }

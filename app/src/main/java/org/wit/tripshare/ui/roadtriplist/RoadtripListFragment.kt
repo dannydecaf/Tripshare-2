@@ -85,7 +85,7 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
     }
 
     override fun onRoadtripClick(roadtrip: RoadtripModel) {
-        val action = RoadtripListFragmentDirections.actionRoadtripListFragmentToRoadtripDetailFragment(roadtrip.id)
+        val action = RoadtripListFragmentDirections.actionRoadtripListFragmentToRoadtripDetailFragment(roadtrip.uid!!)
         findNavController().navigate(action)
     }
 

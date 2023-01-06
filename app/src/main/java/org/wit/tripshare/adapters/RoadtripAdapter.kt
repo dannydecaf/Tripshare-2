@@ -11,7 +11,7 @@ interface RoadtripClickListener {
     fun onRoadtripClick(roadtrip: RoadtripModel)
 }
 
-class RoadtripAdapter constructor(private var roadtrips: List<RoadtripModel>,
+class RoadtripAdapter constructor(private var roadtrips: ArrayList<RoadtripModel>,
                                   private val listener: RoadtripClickListener)
     : RecyclerView.Adapter<RoadtripAdapter.MainHolder>() {
 
@@ -27,6 +27,11 @@ class RoadtripAdapter constructor(private var roadtrips: List<RoadtripModel>,
         holder.bind(roadtrip,listener)
     }
 
+    fun removeAt(position: Int) {
+        roadtrips.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     override fun getItemCount(): Int = roadtrips.size
 
     inner class MainHolder(val binding : CardRoadtripBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -35,7 +40,7 @@ class RoadtripAdapter constructor(private var roadtrips: List<RoadtripModel>,
 //            binding.paymentamount.text = donation.amount.toString()
 //            binding.paymentmethod.text = donation.paymentmethod
 
-            binding.root.tag = roadtrip
+            binding.root.tag = roadtrip.uid
             binding.roadtrip = roadtrip
             binding.imageIcon.setImageResource(R.mipmap.ic_launcher_round)
             binding.root.setOnClickListener { listener.onRoadtripClick(roadtrip) }

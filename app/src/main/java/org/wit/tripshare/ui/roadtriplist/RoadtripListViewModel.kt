@@ -42,8 +42,9 @@ class RoadtripListViewModel : ViewModel() {
     }
     fun loadAll() {
         try {
-            readOnly.value = true
-            FirebaseDBManager.findAll(roadtripsList)
+            RoadtripManager.findAll(roadtripsList)
+//            readOnly.value = true
+//            FirebaseDBManager.findAll(roadtripsList)
             Timber.i("List Roadtrips LoadAll Success : ${roadtripsList.value.toString()}")
         } catch (e: Exception) {
             Timber.i("List Roadtrips LoadAll Error : $e.message")

@@ -31,6 +31,8 @@
     <string name="button_deleteRoadtrip">Delete Roadtrip</string>
     <string name="button_updateRoadtrip">Update Roadtrip</string>
 
+    <string name="messageLoading">Please Wait while the Roadtrips are Loading...</string>
+
     <string name="hint_roadtripTitle">Roadtrip Title</string>
     <string name="hint_roadtripDescription">Roadtrip Description</string>
     <string name="hint_roadtripHighlights">Highlights - what you liked, and recommend about the trip</string>

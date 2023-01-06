@@ -15,6 +15,7 @@ import androidx.navigation.ui.NavigationUI
 import org.wit.tripshare.R
 import org.wit.tripshare.databinding.FragmentRoadtripBinding
 import org.wit.tripshare.models.RoadtripModel
+import org.wit.tripshare.utils.showLoader
 
 class RoadtripFragment : Fragment() {
 

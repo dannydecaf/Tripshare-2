@@ -1,5 +1,6 @@
 package org.wit.tripshare.ui.roadtriplist
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.core.view.MenuHost
@@ -11,15 +12,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.wit.tripshare.R
 import org.wit.tripshare.adapters.RoadtripAdapter
 import org.wit.tripshare.adapters.RoadtripClickListener
-import org.wit.tripshare.databinding.FragmentRoadtripBinding
 import org.wit.tripshare.databinding.FragmentRoadtripListBinding
 import org.wit.tripshare.main.MainApp
 import org.wit.tripshare.models.RoadtripModel
+import org.wit.tripshare.utils.SwipeToDeleteCallback
+import org.wit.tripshare.utils.createLoader
+import org.wit.tripshare.utils.hideLoader
+import org.wit.tripshare.utils.showLoader
 
 class RoadtripListFragment : Fragment(), RoadtripClickListener {
 
@@ -27,6 +33,7 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
     private var _fragBinding: FragmentRoadtripListBinding? = null
     private val fragBinding get() = _fragBinding!!
     private lateinit var roadtripListViewModel: RoadtripListViewModel
+    lateinit var loader: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,20 +45,42 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
     ): View? {
         _fragBinding = FragmentRoadtripListBinding.inflate(inflater, container, false)
         val root = fragBinding.root
-        //activity?.title = getString(R.string.action_roadtrip_list)
         setupMenu()
+        loader = createLoader(requireActivity())
+
         fragBinding.recyclerView.layoutManager = LinearLayoutManager(activity)
         roadtripListViewModel = ViewModelProvider(this).get(RoadtripListViewModel::class.java)
-        roadtripListViewModel.observableRoadtripsList.observe(viewLifecycleOwner, Observer {
-                roadtrips ->
-            roadtrips?.let { render(roadtrips) }
+        showLoader(loader,"Downloading Roadtrips")
+        roadtripListViewModel.observableRoadtripsList.observe(viewLifecycleOwner, Observer { roadtrips ->
+            roadtrips?.let {
+                render(roadtrips as ArrayList<RoadtripModel>)
+                hideLoader(loader)
+                checkSwipeRefresh()
+            }
         })
 
-        val fab: FloatingActionButton = fragBinding.fab
-        fab.setOnClickListener {
+        fragBinding.fab.setOnClickListener {
             val action = RoadtripListFragmentDirections.actionRoadtripListFragmentToRoadtripFragment()
             findNavController().navigate(action)
         }
+
+        setSwipeRefresh()
+
+        val swipeDeleteHandler = object : SwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                showLoader(loader, "Deleting Roadtrip")
+                val adapter = fragBinding.recyclerView.adapter as RoadtripAdapter
+                adapter.removeAt(viewHolder.adapterPosition)
+                roadtripListViewModel.delete(
+                    roadtripListViewModel.liveFirebaseUser.value?.uid!!,
+                    (viewHolder.itemView.tag as RoadtripModel).uid!!
+                )
+                hideLoader(loader)
+            }
+        }
+        val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
+        itemTouchDeleteHelper.attachToRecyclerView(fragBinding.recyclerView)
+
         return root
     }
 
@@ -73,7 +102,7 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    private fun render(roadtripsList: List<RoadtripModel>) {
+    private fun render(roadtripsList: ArrayList<RoadtripModel>) {
         fragBinding.recyclerView.adapter = RoadtripAdapter(roadtripsList,this)
         if (roadtripsList.isEmpty()) {
             fragBinding.recyclerView.visibility = View.GONE
@@ -89,9 +118,29 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
         findNavController().navigate(action)
     }
 
+    fun setSwipeRefresh() {
+        fragBinding.swiperefresh.setOnRefreshListener {
+            fragBinding.swiperefresh.isRefreshing = true
+            showLoader(loader,"Downloading Roadtrips")
+            roadtripListViewModel.load()
+        }
+    }
+
+    fun checkSwipeRefresh() {
+        if (fragBinding.swiperefresh.isRefreshing)
+            fragBinding.swiperefresh.isRefreshing = false
+    }
+
     override fun onResume() {
         super.onResume()
-        roadtripListViewModel.load()
+        showLoader(loader, "Downloading Roadtrips")
+        loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner, Observer { firebaseUser ->
+            if (firebaseUser != null) {
+                roadtripListViewModel.liveFirebaseUser.value = firebaseUser
+                roadtripListViewModel.load()
+            }
+        })
+        //hideLoader(loader)
     }
 
     override fun onDestroyView() {

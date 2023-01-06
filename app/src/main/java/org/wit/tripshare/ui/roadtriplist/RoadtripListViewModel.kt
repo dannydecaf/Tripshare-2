@@ -14,7 +14,7 @@ class RoadtripListViewModel : ViewModel() {
     val observableRoadtripsList: LiveData<List<RoadtripModel>>
         get() = roadtripsList
 
-    var liveFirebaseUser = MutableLiveData<FirebaseUser>()
+//    var liveFirebaseUser = MutableLiveData<FirebaseUser>()
 
     var readOnly = MutableLiveData(false)
 
@@ -25,16 +25,16 @@ class RoadtripListViewModel : ViewModel() {
     fun load() {
         try {
             readOnly.value = false
-            FirebaseDBManager.findAll(liveFirebaseUser.value?.uid!!, roadtripsList)
+//            FirebaseDBManager.findAll(liveFirebaseUser.value?.uid!!, roadtripsList)
             Timber.i("Roadtrip List Load Success : ${roadtripsList.value.toString()}")
         } catch (e: Exception) {
             Timber.i("Roadtrip List Load Error : $e.message")
         }
     }
 
-    fun delete(userid: String, id: String) {
+    fun delete(id: String) {
         try {
-            FirebaseDBManager.delete(userid, id)
+//            FirebaseDBManager.delete(userid, id)
             Timber.i("Roadtrip List Delete Success")
         } catch (e: Exception) {
             Timber.i("Roadtrip List Delete Error : $e.message")

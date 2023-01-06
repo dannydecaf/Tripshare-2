@@ -8,12 +8,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 
-var lastId = 0L
-
-internal fun getId(): Long {
-    return lastId++
-}
-
 object RoadtripManager : RoadtripStore {
 
     private val roadtrips = ArrayList<RoadtripModel>()
@@ -80,10 +74,5 @@ object RoadtripManager : RoadtripStore {
                 Timber.i("Retrofit Delete Error : $t.message")
             }
         })
-    }
-
-    fun logAll() {
-        Timber.v("** Roadtrips List **")
-        roadtrips.forEach { Timber.v("Roadtrip ${it}") }
     }
 }

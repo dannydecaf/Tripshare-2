@@ -13,13 +13,9 @@ class RoadtripViewModel : ViewModel() {
     val observableStatus: LiveData<Boolean>
         get() = status
 
-    fun addRoadtrip(
-        firebaseUser: MutableLiveData<FirebaseUser>,
-        roadtrip: RoadtripModel
-    ) {
+    fun addRoadtrip(roadtrip: RoadtripModel) {
         status.value = try {
-            //roadtrip.profilepic = FirebaseImageManager.imageUri.value.toString()
-            FirebaseDBManager.create(firebaseUser, roadtrip)
+            RoadtripManager.create(roadtrip)
             true
         } catch (e: IllegalArgumentException) {
             false

@@ -7,6 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RoadtripClient {
+
     val serviceURL = "https://donationweb-hdip-server.herokuapp.com"
 
     fun getApi() : RoadtripService {

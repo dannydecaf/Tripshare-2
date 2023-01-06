@@ -4,6 +4,7 @@ import org.wit.tripshare.models.RoadtripModel
 import retrofit2.Call
 import retrofit2.http.*
 
+
 interface RoadtripService {
     @GET("/roadtrips")
     fun getall(): Call<List<RoadtripModel>>

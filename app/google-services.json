@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "973191327271",
+    "project_id": "tripshare-246a4",
+    "storage_bucket": "tripshare-246a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973191327271:android:43ae56f94787759ecaa802",
+        "android_client_info": {
+          "package_name": "org.wit.tripshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "973191327271-hg4vs8tptna3sgj3sffp8m6pf9e39ppm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiHIN69WPBL7wRr4HFhMkQgGjnpFQpsIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "973191327271-hg4vs8tptna3sgj3sffp8m6pf9e39ppm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

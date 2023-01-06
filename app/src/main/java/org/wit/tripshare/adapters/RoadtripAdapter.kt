@@ -37,9 +37,6 @@ class RoadtripAdapter constructor(private var roadtrips: ArrayList<RoadtripModel
     inner class MainHolder(val binding : CardRoadtripBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(roadtrip: RoadtripModel, listener: RoadtripClickListener) {
-//            binding.paymentamount.text = donation.amount.toString()
-//            binding.paymentmethod.text = donation.paymentmethod
-
             binding.root.tag = roadtrip.uid
             binding.roadtrip = roadtrip
             binding.imageIcon.setImageResource(R.mipmap.ic_launcher_round)

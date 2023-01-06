@@ -71,10 +71,7 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
                 showLoader(loader, "Deleting Roadtrip")
                 val adapter = fragBinding.recyclerView.adapter as RoadtripAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
-                roadtripListViewModel.delete(
-                    roadtripListViewModel.liveFirebaseUser.value?.uid!!,
-                    (viewHolder.itemView.tag as RoadtripModel).uid!!
-                )
+                roadtripListViewModel.delete(viewHolder.itemView.tag as String)//.uid!!
                 hideLoader(loader)
             }
         }
@@ -131,17 +128,17 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
             fragBinding.swiperefresh.isRefreshing = false
     }
 
-    override fun onResume() {
-        super.onResume()
-        showLoader(loader, "Downloading Roadtrips")
-        loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner, Observer { firebaseUser ->
-            if (firebaseUser != null) {
-                roadtripListViewModel.liveFirebaseUser.value = firebaseUser
-                roadtripListViewModel.load()
-            }
-        })
-        //hideLoader(loader)
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        showLoader(loader, "Downloading Roadtrips")
+//        loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner, Observer { firebaseUser ->
+//            if (firebaseUser != null) {
+//                roadtripListViewModel.liveFirebaseUser.value = firebaseUser
+//                roadtripListViewModel.load()
+//            }
+//        })
+//        //hideLoader(loader)
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

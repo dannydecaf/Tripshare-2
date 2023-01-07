@@ -2,11 +2,11 @@ package org.wit.tripshare.ui.roadtrip
 
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,7 +16,7 @@ import androidx.navigation.ui.NavigationUI
 import org.wit.tripshare.R
 import org.wit.tripshare.databinding.FragmentRoadtripBinding
 import org.wit.tripshare.models.RoadtripModel
-//import org.wit.tripshare.ui.auth.LoggedInViewModel
+import org.wit.tripshare.ui.auth.LoggedInViewModel
 
 class RoadtripFragment : Fragment() {
 
@@ -24,6 +24,8 @@ class RoadtripFragment : Fragment() {
     // This property is only valid between onCreateView and onDestroyView.
     private val fragBinding get() = _fragBinding!!
     private lateinit var roadtripViewModel: RoadtripViewModel
+//    private val roadtripListViewModel: RoadtripListViewModel by activityViewModels()
+    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,14 +62,14 @@ class RoadtripFragment : Fragment() {
                 Toast.makeText(context, "Enter Details!", Toast.LENGTH_LONG).show()
             else {
                 roadtripViewModel.addRoadtrip(
-//                    loggedInViewModel.liveFirebaseUser,
+                    loggedInViewModel.liveFirebaseUser,
                     RoadtripModel(
                         roadtripTitle = layout.roadtripTitle.text.toString(),
                         roadtripDescription = layout.roadtripDescription.text.toString(),
                         roadtripHighlights = layout.roadtripHighlights.text.toString(),
                         roadtripLowlights = layout.roadtripLowlights.text.toString(),
                         roadtripRating = layout.roadtripRatingBarInput.rating,
-//                        uid = loggedInViewModel.liveFirebaseUser.value?.uid!!
+                        uid = loggedInViewModel.liveFirebaseUser.value?.uid!!
                     )
                 )
             }

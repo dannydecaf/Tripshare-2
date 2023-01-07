@@ -6,6 +6,7 @@ import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,18 +23,17 @@ import org.wit.tripshare.adapters.RoadtripClickListener
 import org.wit.tripshare.databinding.FragmentRoadtripListBinding
 import org.wit.tripshare.main.MainApp
 import org.wit.tripshare.models.RoadtripModel
-import org.wit.tripshare.utils.SwipeToDeleteCallback
-import org.wit.tripshare.utils.createLoader
-import org.wit.tripshare.utils.hideLoader
-import org.wit.tripshare.utils.showLoader
+import org.wit.tripshare.ui.auth.LoggedInViewModel
+import org.wit.tripshare.utils.*
 
 class RoadtripListFragment : Fragment(), RoadtripClickListener {
 
     lateinit var app: MainApp
     private var _fragBinding: FragmentRoadtripListBinding? = null
     private val fragBinding get() = _fragBinding!!
-    private lateinit var roadtripListViewModel: RoadtripListViewModel
     lateinit var loader: AlertDialog
+    private val roadtripListViewModel: RoadtripListViewModel by activityViewModels()
+    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +49,11 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
         loader = createLoader(requireActivity())
 
         fragBinding.recyclerView.layoutManager = LinearLayoutManager(activity)
-        roadtripListViewModel = ViewModelProvider(this).get(RoadtripListViewModel::class.java)
+        fragBinding.fab.setOnClickListener {
+            val action = RoadtripListFragmentDirections.actionRoadtripListFragmentToRoadtripFragment()
+            findNavController().navigate(action)
+        }
+
         showLoader(loader,"Downloading Roadtrips")
         roadtripListViewModel.observableRoadtripsList.observe(viewLifecycleOwner, Observer { roadtrips ->
             roadtrips?.let {
@@ -59,11 +63,6 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
             }
         })
 
-        fragBinding.fab.setOnClickListener {
-            val action = RoadtripListFragmentDirections.actionRoadtripListFragmentToRoadtripFragment()
-            findNavController().navigate(action)
-        }
-
         setSwipeRefresh()
 
         val swipeDeleteHandler = object : SwipeToDeleteCallback(requireContext()) {
@@ -71,12 +70,24 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
                 showLoader(loader, "Deleting Roadtrip")
                 val adapter = fragBinding.recyclerView.adapter as RoadtripAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
-                roadtripListViewModel.delete(viewHolder.itemView.tag as String)//.uid!!
+                roadtripListViewModel.delete(
+                    roadtripListViewModel.liveFirebaseUser.value?.uid!!,
+                    (viewHolder.itemView.tag as RoadtripModel).uid!!
+                )
+
                 hideLoader(loader)
             }
         }
         val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
         itemTouchDeleteHelper.attachToRecyclerView(fragBinding.recyclerView)
+
+        val swipeEditHandler = object : SwipeToEditCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                onRoadtripClick(viewHolder.itemView.tag as RoadtripModel)
+            }
+        }
+        val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
+        itemTouchEditHelper.attachToRecyclerView(fragBinding.recyclerView)
 
         return root
     }
@@ -128,17 +139,17 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
             fragBinding.swiperefresh.isRefreshing = false
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        showLoader(loader, "Downloading Roadtrips")
-//        loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner, Observer { firebaseUser ->
-//            if (firebaseUser != null) {
-//                roadtripListViewModel.liveFirebaseUser.value = firebaseUser
-//                roadtripListViewModel.load()
-//            }
-//        })
-//        //hideLoader(loader)
-//    }
+    override fun onResume() {
+        super.onResume()
+        showLoader(loader, "Downloading Roadtrips")
+        loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner, Observer { firebaseUser ->
+            if (firebaseUser != null) {
+                roadtripListViewModel.liveFirebaseUser.value = firebaseUser
+                roadtripListViewModel.load()
+            }
+        })
+        //hideLoader(loader)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

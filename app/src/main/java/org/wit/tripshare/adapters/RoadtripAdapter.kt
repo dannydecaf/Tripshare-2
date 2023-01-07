@@ -37,7 +37,7 @@ class RoadtripAdapter constructor(private var roadtrips: ArrayList<RoadtripModel
     inner class MainHolder(val binding : CardRoadtripBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(roadtrip: RoadtripModel, listener: RoadtripClickListener) {
-            binding.root.tag = roadtrip.uid
+            binding.root.tag = roadtrip
             binding.roadtrip = roadtrip
             binding.imageIcon.setImageResource(R.mipmap.ic_launcher_round)
             binding.root.setOnClickListener { listener.onRoadtripClick(roadtrip) }

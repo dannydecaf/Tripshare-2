@@ -3,7 +3,7 @@ package org.wit.tripshare.ui.roadtrip
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.wit.tripshare.models.RoadtripManager
+import com.google.firebase.auth.FirebaseUser
 import org.wit.tripshare.models.RoadtripModel
 
 class RoadtripViewModel : ViewModel() {
@@ -13,9 +13,13 @@ class RoadtripViewModel : ViewModel() {
     val observableStatus: LiveData<Boolean>
         get() = status
 
-    fun addRoadtrip(roadtrip: RoadtripModel) {
+    fun addRoadtrip(
+        firebaseUser: MutableLiveData<FirebaseUser>,
+        roadtrip: RoadtripModel
+    ) {
         status.value = try {
-            RoadtripManager.create(roadtrip)
+            //roadtrip.profilepic = FirebaseImageManager.imageUri.value.toString()
+            FirebaseDBManager.create(firebaseUser, roadtrip)
             true
         } catch (e: IllegalArgumentException) {
             false

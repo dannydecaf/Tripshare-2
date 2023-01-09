@@ -16,6 +16,7 @@ data class RoadtripModel(var uid: String? = "",
 //                         var roadtripDates: String = "",
                          var rating: Int = 0,
 //                         var roadtripImage: Uri = Uri.EMPTY,
+                         var profilepic: String = "",
                          val email: String = "joe@bloggs.com") : Parcelable
 {
     @Exclude
@@ -29,6 +30,7 @@ data class RoadtripModel(var uid: String? = "",
 //            "roadtripDates" to roadtripDates,
             "rating" to rating,
 //            "roadtripImage" to roadtripImage,
+            "profilepic" to profilepic,
             "email" to email,
         )
     }

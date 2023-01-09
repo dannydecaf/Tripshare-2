@@ -12,7 +12,25 @@ object FirebaseDBManager : RoadtripStore {
     var database: DatabaseReference = FirebaseDatabase.getInstance().reference
 
     override fun findAll(roadtripsList: MutableLiveData<List<RoadtripModel>>) {
-        TODO("Not yet implemented")
+        database.child("roadtrips")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
+                    Timber.i("Firebase Roadtrip error : ${error.message}")
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val localList = ArrayList<RoadtripModel>()
+                    val children = snapshot.children
+                    children.forEach {
+                        val roadtrip = it.getValue(RoadtripModel::class.java)
+                        localList.add(roadtrip!!)
+                    }
+                    database.child("roadtrip")
+                        .removeEventListener(this)
+
+                    roadtripsList.value = localList
+                }
+            })
     }
 
     override fun findAll(userid: String, roadtripsList: MutableLiveData<List<RoadtripModel>>) {
@@ -82,5 +100,26 @@ object FirebaseDBManager : RoadtripStore {
         childUpdate["user-roadtrips/$userid/$roadtripid"] = roadtripValues
 
         database.updateChildren(childUpdate)
+    }
+
+    fun updateImageRef(userid: String,imageUri: String) {
+
+        val userRoadtrips = database.child("user-roadtrips").child(userid)
+        val allRoadtrips = database.child("roadtrips")
+
+        userRoadtrips.addListenerForSingleValueEvent(
+            object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {}
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.children.forEach {
+                        //Update Users imageUri
+                        it.ref.child("profilepic").setValue(imageUri)
+                        //Update all roadtrips that match 'it'
+                        val roadtrip = it.getValue(RoadtripModel::class.java)
+                        allRoadtrips.child(roadtrip!!.uid!!)
+                            .child("profilepic").setValue(imageUri)
+                    }
+                }
+            })
     }
 }

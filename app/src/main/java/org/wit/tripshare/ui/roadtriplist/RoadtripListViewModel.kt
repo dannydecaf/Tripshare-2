@@ -35,10 +35,22 @@ class RoadtripListViewModel : ViewModel() {
 
     fun delete(userid: String, id: String) {
         try {
+            readOnly.value = false
             FirebaseDBManager.delete(userid, id)
             Timber.i("Roadtrip List Delete Success")
         } catch (e: Exception) {
             Timber.i("Roadtrip List Delete Error : $e.message")
+        }
+    }
+
+    fun loadAll() {
+        try {
+            readOnly.value = true
+            FirebaseDBManager.findAll(roadtripsList)
+            Timber.i("Report LoadAll Success : ${roadtripsList.value.toString()}")
+        }
+        catch (e: Exception) {
+            Timber.i("Report LoadAll Error : $e.message")
         }
     }
 }

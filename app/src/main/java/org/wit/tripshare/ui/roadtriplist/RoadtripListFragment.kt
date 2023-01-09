@@ -3,6 +3,7 @@ package org.wit.tripshare.ui.roadtriplist
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -100,6 +101,16 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_roadtrip_list, menu)
+
+                val item = menu.findItem(R.id.toggleRoadtrips) as MenuItem
+                item.setActionView(R.layout.togglebutton_layout)
+                val toggleRoadtrips: SwitchCompat = item.actionView!!.findViewById(R.id.toggleButton)
+                toggleRoadtrips.isChecked = false
+
+                toggleRoadtrips.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) roadtripListViewModel.loadAll()
+                    else roadtripListViewModel.load()
+                }
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -111,7 +122,8 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
     }
 
     private fun render(roadtripsList: ArrayList<RoadtripModel>) {
-        fragBinding.recyclerView.adapter = RoadtripAdapter(roadtripsList,this)
+        fragBinding.recyclerView.adapter = RoadtripAdapter(roadtripsList,this,
+            roadtripListViewModel.readOnly.value!!)
         if (roadtripsList.isEmpty()) {
             fragBinding.recyclerView.visibility = View.GONE
             fragBinding.roadtripsNotFound.visibility = View.VISIBLE
@@ -123,6 +135,7 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
 
     override fun onRoadtripClick(roadtrip: RoadtripModel) {
         val action = RoadtripListFragmentDirections.actionRoadtripListFragmentToRoadtripDetailFragment(roadtrip.uid!!)
+        if(!roadtripListViewModel.readOnly.value!!)
         findNavController().navigate(action)
     }
 
@@ -130,7 +143,10 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
         fragBinding.swiperefresh.setOnRefreshListener {
             fragBinding.swiperefresh.isRefreshing = true
             showLoader(loader,"Downloading Roadtrips")
-            roadtripListViewModel.load()
+            if(roadtripListViewModel.readOnly.value!!)
+                roadtripListViewModel.loadAll()
+            else
+                roadtripListViewModel.load()
         }
     }
 

@@ -43,7 +43,7 @@ class RoadtripDetailFragment : Fragment() {
 
         fragBinding.deleteRoadtripButton.setOnClickListener {
             roadtripListViewModel.delete(
-                loggedInViewModel.liveFirebaseUser.value?.uid!!,
+                loggedInViewModel.liveFirebaseUser.value?.email!!,
                 detailViewModel.observableRoadtrip.value?.uid!!
             )
             findNavController().navigateUp()

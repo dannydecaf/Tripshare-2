@@ -18,7 +18,8 @@ class RoadtripDetailViewModel : ViewModel() {
 
     fun getRoadtrip(userid: String, id: String) {
         try {
-            FirebaseDBManager.findById(userid, id, roadtrip)
+            //RoadtripManager.findById(email, id, roadtrip)
+            RoadtripManager.findById(userid, id, roadtrip)
             Timber.i(
                 "Detail getRoadtrip() Success : ${
                     roadtrip.value.toString()
@@ -31,7 +32,8 @@ class RoadtripDetailViewModel : ViewModel() {
 
     fun updateRoadtrip(userid: String, id: String, roadtrip: RoadtripModel) {
         try {
-            FirebaseDBManager.update(userid, id, roadtrip)
+            //RoadtripManager.update(email, id, roadtrip)
+            RoadtripManager.update(userid, id, roadtrip)
             Timber.i("Detail update() Success : $roadtrip")
         } catch (e: Exception) {
             Timber.i("Detail update() Error : $e.message")

@@ -1,6 +1,7 @@
 package org.wit.tripshare.models
 
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseUser
 import org.wit.tripshare.api.RoadtripClient
 import org.wit.tripshare.api.RoadtripWrapper
 import retrofit2.Call
@@ -14,7 +15,7 @@ object RoadtripManager : RoadtripStore {
 
     override fun findAll(roadtripsList: MutableLiveData<List<RoadtripModel>>) {
 
-        val call = RoadtripClient.getApi().getall()
+        val call = RoadtripClient.getApi().findall()
 
         call.enqueue(object : Callback<List<RoadtripModel>> {
             override fun onResponse(call: Call<List<RoadtripModel>>,
@@ -30,14 +31,43 @@ object RoadtripManager : RoadtripStore {
         })
     }
 
-    override fun findById(id:String) : RoadtripModel? {
-        val foundRoadtrip: RoadtripModel? = roadtrips.find { it.uid == id }
-        return foundRoadtrip
+    override fun findAll(email: String, roadtripsList: MutableLiveData<List<RoadtripModel>>) {
+
+        val call = RoadtripClient.getApi().findall(email)
+
+        call.enqueue(object : Callback<List<RoadtripModel>> {
+            override fun onResponse(call: Call<List<RoadtripModel>>,
+                                    response: Response<List<RoadtripModel>>
+            ) {
+                roadtripsList.value = response.body() as ArrayList<RoadtripModel>
+                Timber.i("Retrofit findAll() = ${response.body()}")
+            }
+
+            override fun onFailure(call: Call<List<RoadtripModel>>, t: Throwable) {
+                Timber.i("Retrofit findAll() Error : $t.message")
+            }
+        })
     }
 
-    override fun create(roadtrip: RoadtripModel) {
+    override fun findById(email: String, id: String, roadtrip: MutableLiveData<RoadtripModel>)   {
 
-        val call = RoadtripClient.getApi().post(roadtrip)
+        val call = RoadtripClient.getApi().get(email,id)
+
+        call.enqueue(object : Callback<RoadtripModel> {
+            override fun onResponse(call: Call<RoadtripModel>, response: Response<RoadtripModel>) {
+                roadtrip.value = response.body() as RoadtripModel
+                Timber.i("Retrofit findById() = ${response.body()}")
+            }
+
+            override fun onFailure(call: Call<RoadtripModel>, t: Throwable) {
+                Timber.i("Retrofit findById() Error : $t.message")
+            }
+        })
+    }
+
+    override fun create(firebaseUser: MutableLiveData<FirebaseUser>, roadtrip: RoadtripModel) {
+
+        val call = RoadtripClient.getApi().post(roadtrip.email,roadtrip)
 
         call.enqueue(object : Callback<RoadtripWrapper> {
             override fun onResponse(call: Call<RoadtripWrapper>,
@@ -56,8 +86,9 @@ object RoadtripManager : RoadtripStore {
         })
     }
 
-    override fun delete(id: String) {
-        val call = RoadtripClient.getApi().delete(id)
+    override fun delete(email: String,id: String) {
+
+        val call = RoadtripClient.getApi().delete(email,id)
 
         call.enqueue(object : Callback<RoadtripWrapper> {
             override fun onResponse(call: Call<RoadtripWrapper>,
@@ -75,4 +106,26 @@ object RoadtripManager : RoadtripStore {
             }
         })
     }
+
+            override fun update(email: String,id: String, roadtrip: RoadtripModel) {
+
+                val call = RoadtripClient.getApi().put(email,id,roadtrip)
+
+                call.enqueue(object : Callback<RoadtripWrapper> {
+                    override fun onResponse(
+                        call: Call<RoadtripWrapper>,
+                        response: Response<RoadtripWrapper>
+                    ) {
+                        val donationWrapper = response.body()
+                        if (donationWrapper != null) {
+                            Timber.i("Retrofit Update ${donationWrapper.message}")
+                            Timber.i("Retrofit Update ${donationWrapper.data.toString()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<RoadtripWrapper>, t: Throwable) {
+                        Timber.i("Retrofit Update Error : $t.message")
+                    }
+                })
+            }
 }

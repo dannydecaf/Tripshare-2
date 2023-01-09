@@ -71,7 +71,7 @@ class RoadtripListFragment : Fragment(), RoadtripClickListener {
                 val adapter = fragBinding.recyclerView.adapter as RoadtripAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
                 roadtripListViewModel.delete(
-                    roadtripListViewModel.liveFirebaseUser.value?.uid!!,
+                    roadtripListViewModel.liveFirebaseUser.value?.email!!,
                     (viewHolder.itemView.tag as RoadtripModel).uid!!
                 )
 

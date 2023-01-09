@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseUser
+import org.wit.tripshare.firebase.FirebaseDBManager
 import org.wit.tripshare.models.RoadtripModel
 
 class RoadtripViewModel : ViewModel() {

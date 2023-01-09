@@ -66,7 +66,9 @@ class RoadtripFragment : Fragment() {
                     RoadtripModel(
                         roadtripTitle = layout.editRoadtripTitle.text.toString(),
                         roadtripDescription = layout.editRoadtripDescription.text.toString(),
-                        rating = layout.rating.rating.toInt(),
+                        roadtripHighlights = layout.editRoadtripHighlights.text.toString(),
+                        roadtripLowlights = layout.editRoadtripLowlights.text.toString(),
+                        rating = layout.rating.rating,
                         email = loggedInViewModel.liveFirebaseUser.value?.email!!
                     )
                 )

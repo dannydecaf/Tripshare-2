@@ -99,9 +99,57 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/roadtrip_description"
-                android:lines="4"
-                android:maxLength="140"
+                android:lines="2"
+                android:maxLength="70"
                 android:text="@={roadtripvm.observableRoadtrip.roadtripDescription}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/roadtripHighlightsInput"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="12"
+            app:expandedHintEnabled="false"
+            app:hintTextAppearance="@style/HintText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/roadtripDescriptionInput"
+            tools:expandedHintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editRoadtripHighlights"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/roadtrip_highlights"
+                android:maxLength="12"
+                android:text="@={roadtripvm.observableRoadtrip.roadtripHighlights}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/roadtripLowlightsInput"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="12"
+            app:expandedHintEnabled="false"
+            app:hintTextAppearance="@style/HintText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/roadtripHighlightsInput"
+            tools:expandedHintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editRoadtripLowlights"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/roadtrip_lowlights"
+                android:maxLength="12"
+                android:text="@={roadtripvm.observableRoadtrip.roadtripLowlights}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <RatingBar
@@ -116,7 +164,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/roadtripDescriptionInput" />
+            app:layout_constraintTop_toBottomOf="@+id/roadtripHighlightsInput" />
 
         <Button
             android:id="@+id/editRoadtripButton"

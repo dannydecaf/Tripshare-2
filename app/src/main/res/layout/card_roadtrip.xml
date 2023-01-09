@@ -10,102 +10,92 @@
             type="org.wit.tripshare.models.RoadtripModel" />
     </data>
 
-<androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:elevation="24dp">
-
-    <RelativeLayout
-        android:id="@+id/cardRoadtrip"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorSecondaryLight"
-        android:padding="16dp">
+        android:layout_marginBottom="8dp"
+        android:elevation="24dp">
 
-        <ImageView
-            android:id="@+id/imageIcon"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/cardRoadtrip"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="16dp"
-            android:contentDescription="@string/app_name"
-            app:srcCompat="@mipmap/ic_launcher_round" />
+            android:background="@color/colorSecondaryLight"
+            android:padding="16dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/roadtripTitle"
-            android:layout_width="87dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/imageIcon"
-            android:text="@{roadtrip.roadtripTitle}"
-            android:textSize="30sp"
-            tools:text="A Title"
-            tools:textColor="@color/black" />
+            <ImageView
+                android:id="@+id/imageIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/app_name"
+                app:srcCompat="@mipmap/ic_launcher_round" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/roadtripDescription"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/roadtripTitle"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/imageIcon"
-            android:text="@{roadtrip.roadtripDescription}"
-            tools:textColor="@color/colorSecondaryDark"
-            tools:text="A Description"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/roadtripTitle"
+                android:layout_width="87dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@+id/imageIcon"
+                android:text="@{roadtrip.roadtripTitle}"
+                android:textSize="30sp"
+                tools:text="A Title"
+                tools:textColor="@color/black" />
 
-        <androidx.appcompat.widget.AppCompatRatingBar
-            android:id="@+id/roadtripRatingBar"
-            style="?android:attr/ratingBarStyleIndicator"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/message"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/imageIcon"
-            android:rating="@{roadtrip.rating}"
-            android:scaleX=".7"
-            android:scaleY=".7"
-            android:theme="@style/RatingBar"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/roadtripDescription"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/roadtripTitle"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/imageIcon"
+                android:text="@{roadtrip.roadtripDescription}"
+                tools:textColor="@color/colorSecondaryDark"
+                tools:text="A Description"/>
 
-        <ImageView
-            android:id="@+id/imagefavourite"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="5dp"
-            android:layout_toEndOf="@id/roadtripRatingBar"
-            app:srcCompat="@android:drawable/star_big_off" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/roadtripHighlights"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/roadtripDescription"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/imageIcon"
+                android:text="@{roadtrip.roadtripHighlights}"
+                android:textColor="@color/colorSecondaryDark"
+                tools:text="Highlights" />
 
-        <TextView
-            android:id="@+id/message"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/roadtripDescription"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/imageIcon"
-            android:text="@{roadtrip.message}"
-            android:textColor="@color/colorPrimary"
-            tools:text="message" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/roadtripLowlights"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/roadtripHighlights"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/imageIcon"
+                android:text="@{roadtrip.roadtripLowlights}"
+                android:textColor="@color/colorSecondaryDark"
+                tools:text="Lowlights" />
 
-<!--        <ImageButton-->
-<!--            android:id="@+id/roadtripOpenButton"-->
-<!--            android:layout_width="41dp"-->
-<!--            android:layout_height="32dp"-->
-<!--            android:layout_marginStart="35dp"-->
-<!--            android:layout_toEndOf="@+id/roadtripDescription"-->
-<!--            android:background="@color/colorSecondaryLight"-->
-<!--            android:scaleX="2"-->
-<!--            android:scaleY="2"-->
-<!--            android:src="@drawable/ic_baseline_menu_open_24" />-->
-    </RelativeLayout>
-</androidx.cardview.widget.CardView>
+            <RatingBar
+                android:id="@+id/roadtripRatingBar"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/roadtripLowlights"
+                android:scaleX=".7"
+                android:scaleY=".7"
+                android:theme="@style/RatingBar"
+                android:layout_marginStart="20dp"
+                android:layout_toRightOf="@id/imageIcon"
+                android:isIndicator="true"
+                android:rating="@{roadtrip.rating}" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

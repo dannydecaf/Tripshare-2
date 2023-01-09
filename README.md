@@ -42,9 +42,14 @@ Time was a factor though, and if I had found myself so short on time in the end,
 
 I had to sacrifice Map/Location functionality, and slotting in a 'Destination' model as a sub-model to 'Roadtrip'. I had also started Dark Mode but alas, I left myself too tight on time.
 
+# UML Diagram
+
+![file2](https://user-images.githubusercontent.com/76448325/211430855-35d470db-878a-4820-bd64-7213033d2fbc.png)
+
 # References
 
 Adding Dark Mode - https://www.youtube.com/watch?v=fM6BGgmXYpA
+Creating UML Diagram in Intellij Ultimate - https://www.youtube.com/watch?v=66ArYQUFLdM
 
 
 

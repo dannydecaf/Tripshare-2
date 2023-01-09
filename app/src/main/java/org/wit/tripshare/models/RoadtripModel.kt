@@ -11,11 +11,11 @@ import kotlinx.parcelize.Parcelize
 data class RoadtripModel(var uid: String? = "",
                          var roadtripTitle: String = "",
                          var roadtripDescription: String = "",
-                         var roadtripHighlights: String = "",
-                         var roadtripLowlights: String = "",
-                         var roadtripDates: String = "",
-                         var roadtripRating: Float = 0.0f,
-                         var roadtripImage: Uri = Uri.EMPTY,
+//                         var roadtripHighlights: String = "",
+//                         var roadtripLowlights: String = "",
+//                         var roadtripDates: String = "",
+                         var rating: Int = 0,
+//                         var roadtripImage: Uri = Uri.EMPTY,
                          val email: String = "joe@bloggs.com") : Parcelable
 {
     @Exclude
@@ -24,11 +24,11 @@ data class RoadtripModel(var uid: String? = "",
             "uid" to uid,
             "roadtripTitle" to roadtripTitle,
             "roadtripDescription" to roadtripDescription,
-            "roadtripHighlights" to roadtripHighlights,
-            "roadtripLowlights" to roadtripLowlights,
-            "roadtripDates" to roadtripDates,
-            "roadtripRating" to roadtripRating,
-            "roadtripImage" to roadtripImage,
+//            "roadtripHighlights" to roadtripHighlights,
+//            "roadtripLowlights" to roadtripLowlights,
+//            "roadtripDates" to roadtripDates,
+            "rating" to rating,
+//            "roadtripImage" to roadtripImage,
             "email" to email,
         )
     }

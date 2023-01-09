@@ -2,6 +2,8 @@
     <string name="app_name">tripShare</string>
     <string name="roadtripTitle">Welcome</string>
     <string name="roadtripSubtitle">Please Add a Roadtrip</string>
+    <string name="editRoadtripTitle">Welcome</string>
+    <string name="editRoadtripSubtitle">Edit this Roadtrip</string>
     <string name="roadtripButton">Add</string>
     <string name="roadtripListTitle">Roadtrip List</string>
     <string name="action_roadtrip">Add Roadtrip</string>
@@ -19,8 +21,8 @@
     <string name="roadtripError">Error : Couldn\'t Add a Roadtrip…</string>
     <string name="roadtripDetails">Roadtrip Details</string>
 
-    <string name="roadtrip_name">Roadtrip Name: </string>
-    <string name="roadtrip_description">Description: </string>
+    <string name="roadtrip_title">Roadtrip title</string>
+    <string name="roadtrip_description">Roadtrip description</string>
     <string name="roadtrip_highlights">Highlights: </string>
     <string name="roadtrip_lowlights">Lowlights: </string>
     <string name="roadtrip_dates">Dates Visited: </string>

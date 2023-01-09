@@ -78,8 +78,8 @@ object FirebaseDBManager : RoadtripStore {
         val roadtripValues = roadtrip.toMap()
 
         val childUpdate : MutableMap<String, Any?> = HashMap()
-        childUpdate["donations/$roadtripid"] = roadtripValues
-        childUpdate["user-donations/$userid/$roadtripid"] = roadtripValues
+        childUpdate["roadtrips/$roadtripid"] = roadtripValues
+        childUpdate["user-roadtrips/$userid/$roadtripid"] = roadtripValues
 
         database.updateChildren(childUpdate)
     }

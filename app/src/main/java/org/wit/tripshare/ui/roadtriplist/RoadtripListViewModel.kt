@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseUser
 import org.wit.tripshare.firebase.FirebaseDBManager
-import org.wit.tripshare.models.RoadtripManager
 import org.wit.tripshare.models.RoadtripModel
 import timber.log.Timber
 
@@ -40,16 +39,6 @@ class RoadtripListViewModel : ViewModel() {
             Timber.i("Roadtrip List Delete Success")
         } catch (e: Exception) {
             Timber.i("Roadtrip List Delete Error : $e.message")
-        }
-    }
-    fun loadAll() {
-        try {
-            RoadtripManager.findAll(roadtripsList)
-            readOnly.value = true
-            FirebaseDBManager.findAll(roadtripsList)
-            Timber.i("List Roadtrips LoadAll Success : ${roadtripsList.value.toString()}")
-        } catch (e: Exception) {
-            Timber.i("List Roadtrips LoadAll Error : $e.message")
         }
     }
 }

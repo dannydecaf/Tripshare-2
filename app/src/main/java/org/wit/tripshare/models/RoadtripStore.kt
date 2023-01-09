@@ -8,8 +8,8 @@ interface RoadtripStore {
                 MutableLiveData<List<RoadtripModel>>)
     fun findAll(userid:String,
                 roadtripsList: MutableLiveData<List<RoadtripModel>>)
-    fun findById(userid:String, id: String, roadtrip: MutableLiveData<RoadtripModel>)
+    fun findById(userid:String, roadtripid: String, roadtrip: MutableLiveData<RoadtripModel>)
     fun create(firebaseUser: MutableLiveData<FirebaseUser>, roadtrip: RoadtripModel)
-    fun delete(userid:String,id: String)
-    fun update(userid: String,id: String, roadtrip: RoadtripModel)
+    fun delete(userid:String, roadtripid: String)
+    fun update(userid: String, roadtripid: String, roadtrip: RoadtripModel)
 }

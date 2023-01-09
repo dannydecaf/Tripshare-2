@@ -58,18 +58,15 @@ class RoadtripFragment : Fragment() {
 
     fun setButtonListener(layout: FragmentRoadtripBinding) {
         layout.roadtripButton.setOnClickListener {
-            if (layout.roadtripTitle.text!!.isEmpty() or layout.roadtripDescription.text!!.isEmpty())
-                Toast.makeText(context, "Enter Details!", Toast.LENGTH_LONG).show()
+            if (layout.editRoadtripTitle.text!!.isEmpty() or layout.editRoadtripDescription.text!!.isEmpty())
+                Toast.makeText(context, "Enter details!", Toast.LENGTH_LONG).show()
             else {
                 roadtripViewModel.addRoadtrip(
                     loggedInViewModel.liveFirebaseUser,
                     RoadtripModel(
-                        roadtripTitle = layout.roadtripTitle.text.toString(),
-                        roadtripDescription = layout.roadtripDescription.text.toString(),
-                        roadtripHighlights = layout.roadtripHighlights.text.toString(),
-                        roadtripLowlights = layout.roadtripLowlights.text.toString(),
-                        roadtripDates = layout.roadtripDates.text.toString(),
-                        roadtripRating = layout.roadtripRatingBarInput.rating,
+                        roadtripTitle = layout.editRoadtripTitle.text.toString(),
+                        roadtripDescription = layout.editRoadtripDescription.text.toString(),
+                        rating = layout.rating.rating.toInt(),
                         email = loggedInViewModel.liveFirebaseUser.value?.email!!
                     )
                 )

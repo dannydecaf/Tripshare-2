@@ -58,52 +58,16 @@
             tools:textColor="@color/colorSecondaryDark"
             tools:text="A Description"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/roadtripHighlights"
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/roadtripRatingBar"
+            style="?android:attr/ratingBarStyleIndicator"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/roadtripDescription"
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/imageIcon"
-            android:text="@{roadtrip.roadtripHighlights}"
-            tools:textColor="@color/colorSecondaryDark"
-            tools:text="Highlights"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/roadtripLowlights"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/roadtripHighlights"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/imageIcon"
-            android:text="@{roadtrip.roadtripLowlights}"
-            tools:textColor="@color/colorSecondaryDark"
-            tools:text="Lowlights"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/roadtripDates"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/roadtripLowlights"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/imageIcon"
-            android:text="@{roadtrip.roadtripDates}"
-            tools:textColor="@color/colorSecondaryDark"
-            tools:text="Dates Stayed"/>
-
-        <androidx.appcompat.widget.AppCompatRatingBar
-            android:id="@+id/roadtripRatingBar"
-            style="?android:attr/ratingBarStyleIndicator"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/roadtripDates"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/imageIcon"
-            android:rating="3.5"
+            android:rating="@{roadtrip.rating}"
             android:scaleX=".7"
             android:scaleY=".7"
             android:theme="@style/RatingBar"/>
